@@ -24,19 +24,16 @@ RUN set -ex \
  && curl -L https://apt.mopidy.com/mopidy.list -o /etc/apt/sources.list.d/mopidy.list \
  && apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        mopidy \
-        mopidy-soundcloud \
-        mopidy-spotify \
+    mopidy \
+    mopidy-beets \
+    mopidy-mpd \
     # Clean-up
  && apt-get purge --auto-remove -y \
         gcc \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache
 
-COPY Pipfile Pipfile.lock /
-
-RUN set -ex \
- && pipenv install --system --deploy
+RUN python3 -m pip install Mopidy-Iris Mopidy-Moped
 
 RUN set -ex \
  && mkdir -p /var/lib/mopidy/.config \
