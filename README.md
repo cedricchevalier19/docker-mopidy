@@ -45,7 +45,9 @@ Mount the current user's pulse directory to the pulseuadio user (UID `105`).
 Based on https://github.com/TheBiggerGuy/docker-pulseaudio-example.
 
     $ docker run --rm \
-        --user $UID:$GID -v /run/user/$UID/pulse:/run/user/105/pulse \
+        --user $UID:$GID \
+		-v /run/user/$UID/pulse:/run/user/105/pulse \
+		-v $HOME/.config/pulse/cookie:/var/lib/mopidy/.config/pulse/cookie \
         wernight/mopidy \
         gst-launch-1.0 audiotestsrc ! audioresample ! autoaudiosink
 
